@@ -19,7 +19,7 @@ const routes: Routes = [
     component: BlogHomeComponent
   },
   {
-    path: 'blog/detail/:id',
+    path: 'blog/detail/1/:id',
     component: BlogItemDetailsComponent
   },
 
