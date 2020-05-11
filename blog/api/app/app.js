@@ -1,37 +1,39 @@
+'use strict';
+
 import express from 'express';
+import morgan from 'morgan';
+import mongoose from 'mongoose';
+import config from './config';
+import routes from './REST/routes';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
 const app = express();
 
-// app.use(express.json());
 
 app.use(express.static('public'));
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+app.use(cors());
 
-const posts = [
-  {
-    id: 1, title: 'tytuł1', text: 'Text1',
-  },
-  {
-    id: 2, title: 'tytuł2', text: 'Text2',
-  },
-  {
-    id: 3, title: 'tytuł3', text: 'Text3',
-  },
-];
-
-app.get('/api/posts', (req, res) => {
-  res.send(posts);
-});
-
-app.get('/api/posts/:id', (req, res) => {
-  const post = posts.find((p) => p.id === parseInt(req.params.id));
-
-  if (!post) {
-    res.status(404).send('Post not found');
+mongoose.connect(config.databaseUrl, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true}, (error) => {
+  if (error) {
+    console.error(error);
   }
-
-  res.send(post);
+  else {
+    console.log('Connect with database established');
+  }
 });
 
-app.listen(3000, function () {
-  console.log('Server is running!');
+process.on('SIGINT', () => {
+  mongoose.connection.close(function () {
+    console.error('Mongoose default connection disconnected through app termination');
+    process.exit(0);
+  });
+});
+
+routes(app);
+app.listen(3000, () => {
+  console.info(`Server is running at 3000`)
 });
