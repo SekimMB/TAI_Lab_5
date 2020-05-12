@@ -7,7 +7,6 @@ import config from './config';
 import routes from './REST/routes';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-
 const app = express();
 
 
@@ -16,6 +15,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cors());
+
 
 mongoose.connect(config.databaseUrl, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true}, (error) => {
   if (error) {
@@ -33,7 +33,8 @@ process.on('SIGINT', () => {
   });
 });
 
+
 routes(app);
-app.listen(3000, () => {
-  console.info(`Server is running at 3000`)
+app.listen(config.port, () => {
+  console.info(`Server is running at ${config.port}`)
 });
