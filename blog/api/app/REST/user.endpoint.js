@@ -18,7 +18,7 @@ const userEndpoint = (router) => {
     }
   });
 
-  router.post('/api/user/create', async (request, response, next) => {
+  router.post('/api/user/create',auth, async (request, response, next) => {
     try {
       let result = await business(request).getUserManager(request).createNewOrUpdate(request.body);
       response.status(200).send(result);
