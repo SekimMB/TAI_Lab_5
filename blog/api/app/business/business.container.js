@@ -1,5 +1,6 @@
 'use strict';
 import postManager from './post.manager'
+import userManager from './user.manager'
 
 function getContext(request) {
   return { user: request && request.user };
@@ -18,4 +19,9 @@ const createBusinessContainer = (request, config) => {
   };
 };
 
-export default createBusinessContainer;
+
+export default {
+  getUserManager: getter(userManager)
+};
+
+
