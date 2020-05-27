@@ -28,4 +28,5 @@ export default {
       response.sendStatus(500);
     }
   }
+
 };

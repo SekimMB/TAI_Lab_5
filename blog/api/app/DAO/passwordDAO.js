@@ -25,6 +25,7 @@ async function createOrUpdate(data) {
   }
   return result;
 }
+
 async function authorize(userId, password) {
   const result = await PasswordModel.findOne({ userId: userId, password: password });
   if (result && mongoConverter(result)) {

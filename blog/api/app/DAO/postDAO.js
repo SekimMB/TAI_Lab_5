@@ -1,10 +1,8 @@
 'use strict';
-
 import mongoose from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
 import mongoConverter from '../service/mongoConverter';
 import * as _ from "lodash";
-
 const postSchema = new mongoose.Schema({
   title: {type: String},
   url: {type: String},
@@ -13,9 +11,7 @@ const postSchema = new mongoose.Schema({
   collection: 'post'
 });
 postSchema.plugin(uniqueValidator);
-
 const PostModel = mongoose.model('post', postSchema);
-
 async function query() {
   const result = await PostModel.find({});
   {
@@ -24,9 +20,16 @@ async function query() {
     }
   }
 }
-
 async function get(id) {
   return PostModel.findOne({_id: id}).then(function (result) {
+    if (result) {
+      return mongoConverter(result);
+    }
+  });
+}
+
+async function search(content) {
+  return PostModel.find(content).then(function (result) {
     if (result) {
       return mongoConverter(result);
     }
@@ -46,11 +49,9 @@ async function createNewOrUpdate(data) {
     }
   });
 }
-
 export default {
   query: query,
   get: get,
   createNewOrUpdate: createNewOrUpdate,
-
   model: PostModel
 };

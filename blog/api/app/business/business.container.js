@@ -15,13 +15,10 @@ function getter(manager, request) {
 const createBusinessContainer = (request, config) => {
 
   return {
-    getPostManager: getter(postManager, request)
+    getPostManager: getter(postManager, request),
+    getUserManager: getter(userManager, request)
   };
 };
 
-
-export default {
-  getUserManager: getter(userManager)
-};
-
+export default createBusinessContainer;
 

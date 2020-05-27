@@ -11,16 +11,16 @@ import auth from '../middleware/auth';
 const userEndpoint = (router) => {
   router.post('/api/user/auth', async (request, response, next) => {
     try {
-      let result = await business(request).getUserManager(request).authenticate(request.body.login, request.body.password);
+      let result = await business(request).getUserManager().authenticate(request.body.login, request.body.password);
       response.status(200).send(result);
     } catch (error) {
       applicationException.errorHandler(error, response);
     }
   });
 
-  router.post('/api/user/create',auth, async (request, response, next) => {
+  router.post('/api/user/create', async (request, response, next) => {
     try {
-      let result = await business(request).getUserManager(request).createNewOrUpdate(request.body);
+      let result = await business(request).getUserManager().createNewOrUpdate(request.body);
       response.status(200).send(result);
     } catch (error) {
       applicationException.errorHandler(error, response);
@@ -29,12 +29,12 @@ const userEndpoint = (router) => {
 
   router.delete('/api/user/logout/:userId', auth, async (request, response, next) => {
     try {
-      let result = await business(request).getUserManager(request).removeHashSession(request.body.userId);
+      let result = await business(request).getUserManager().removeHashSession(request.params.userId);
       response.status(200).send(result);
     } catch (error) {
       applicationException.errorHandler(error, response);
-    }    });
+    }
+  });
 };
 
 export default userEndpoint;
-

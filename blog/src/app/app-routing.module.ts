@@ -6,10 +6,13 @@ import { BlogComponent } from './components/blog/blog.component';
 import {BlogItemDetailsComponent} from './components/blog-item-details/blog-item-details.component';
 import {BlogHomeComponent} from './components/blog-home/blog-home.component';
 import {AddPostComponent} from './components/add-post/add-post.component';
+import {AuthGuard} from './services/auth.guard';
+import {LoginComponent} from './components/login/login.component';
+import {SignupComponent} from './components/signup/signup.component';
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: HomeComponent,
   },
   {
     path: 'contact',
@@ -17,7 +20,8 @@ const routes: Routes = [
   },
   {
     path: 'blog',
-    component: BlogHomeComponent
+    component: BlogHomeComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'blog/detail/1/:id',
@@ -25,9 +29,17 @@ const routes: Routes = [
   },
   {
     path: 'add-post',
-    component: AddPostComponent
-  }
+    component: AddPostComponent,
 
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'signup',
+    component: SignupComponent,
+  },
 
 ];
 
