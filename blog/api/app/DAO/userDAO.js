@@ -22,12 +22,12 @@ const userSchema = new mongoose.Schema({
   active: { type: Boolean, default: false, required: false },
   isAdmin: { type: Boolean, default: false, required: false }
 }, {
-  collection: 'kc_user'
+  collection: 'mb_user'
 });
 
 userSchema.plugin(uniqueValidator);
 
-const UserModel = mongoose.model('dp_user', userSchema);
+const UserModel = mongoose.model('mb_user', userSchema);
 
 function createNewOrUpdate(user) {
   return Promise.resolve().then(() => {
